@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System</title>
+  <style>
+    /* Style the navigation bar */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        background-color: #4CAF50; /* Library's primary color */
+        padding: 10px 20px;
+    }
+    
+    /* Style the navigation links and align them to the right */
+    .navbar a {
+        text-decoration: none;
+        color: #fff;
+        margin: 0 20px;
+        font-weight: 500;
+        font-size: 16px;
+    }
+    
+    .navbar .right-links {
+        margin-left: auto; /* Pushes the links to the right */
+    }
+
+    table {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      table-layout: fixed;
+      background-color: #E6F7FF; /* Light blue background color */
+    }
+    
+    table caption {
+      font-size: 1.5em;
+      margin: .5em 0 .75em;
+    }
+    
+    table tr {
+      background-color: #f8f8f8; /* Light gray background color for rows */
+      border: 1px solid #ddd;
+      padding: .35em;
+    }
+    
+    table th,
+    table td {
+      padding: .625em;
+      text-align: center;
+    }
+
+    
+    @media screen and (max-width: 600px) {
+      table {
+        border: 0;
+      }
+    
+      table caption {
+        font-size: 1.3em;
+      }
+      
+      table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+        background-color: #4CAF50;
+      }
+      
+      table tr {
+        background-color: #f8f8f8; /* Light gray background color for rows */
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+      }
+      
+      table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+      }
+      
+      table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      
+      table td:last-child {
+        border-bottom: 0;
+      }
+    }
+    /* general styling */
+    body {
+      font-family: "Open Sans", sans-serif;
+      line-height: 1.25;
+    }
+  </style>
+</head>
+<body>
+    <div class="navbar">
+        <!-- Add your library management system links here -->
+        <div class="right-links">
+          <a href="{% url 'searchBooks' %}" class="action-button">
+            <i class="fas fa-stream"></i>Home
+        </a>
+        </div>
+    </div>
+  <table>
+    <br/>
+    <br/>
+    <thead>
+      <tr>
+        <th scope="col">ISBN</th>
+        <th scope="col">Title</th>
+        <th scope="col">Card Id</th>
+        <th scope="col">Borrower Name</th>
+        <th scope="col">Checkout Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if result %}
+    {% for row in result %}
+        <tr>
+        <td>{{ row.isbn }}</td>
+        <td>{{ row.title }}</td>
+        <td>{{ row.card_id }}</td>
+        <td>{{ row.borrower_name }}</td>
+        <td>{{ row.date_out }}</td>
+        <td>{{ row.due_date }}</td>
+        <td>
+            <a href="{% url 'checkInBooks' row.isbn %}">
+            <i class="fas fa-stream"></i>Checkin</a>
+        </td>
+        </tr>
+    {% endfor %}
+    {% else %}
+        <tr>
+          <td colspan="5">No books available for this selection</td>
+        </tr>
+    {% endif %}
+    </tbody>
+  </table>
+</body>
+</html>

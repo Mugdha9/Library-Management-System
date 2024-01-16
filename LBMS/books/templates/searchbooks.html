@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    /* Reset some default browser styles */
+    body, h1, h2, p, ul, li, form {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f2f2f2;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    /* Create a navigation bar at the top with library-specific links */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      background-color: #4CAF50; /* Library's primary color */
+      padding: 10px 20px;
+    }
+
+    /* Style the navigation links and align them to the right */
+    .navbar a {
+      text-decoration: none;
+      color: #fff;
+      margin: 0 20px;
+      font-weight: 500;
+      font-size: 16px;
+    }
+    
+    .navbar .right-links {
+      margin-left: auto; /* Pushes the links to the right */
+    }
+
+    /* Center the search box vertically and horizontally */
+    .wrap {
+      width: 100%;
+      height: 100vh; /* 100% of the viewport height */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Style the search box with library-specific colors */
+    .search {
+      display: flex;
+      background-color: #fff;
+      border: 1px solid #4CAF50; /* Library's primary color */
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style the search input */
+    .searchTerm {
+      width: 400px; /* Make the input wider to fit your placeholder text */
+      border: none;
+      padding: 20px; /* Increase padding for a larger input */
+      border-radius: 30px 0 0 30px;
+      outline: none;
+      color: #333;
+      font-size: 20px; /* Increase font size for a larger input */
+    }
+
+    .searchTerm:focus {
+      color: #4CAF50; /* Library's primary color */
+    }
+
+    /* Style the search button with library-specific colors */
+    .searchButton {
+      background-color: #4CAF50; /* Library's primary color */
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      border-radius: 0 30px 30px 0;
+      padding: 10px 20px;
+    }
+
+    .searchButton i {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <!-- Add your library management system links here -->
+    <div class="right-links">
+      <a href="{% url 'addBorrowers' %}">Add Borrower</a>
+      <a href="{% url 'searchcheckOutBooks' %}">Checkin Books</a>
+      <a href="{% url 'checkFines' %}">Check Fines</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <form name="search" method="post" action="{% url 'listBooks' %}">
+      {% csrf_token %}
+      <div class="search">
+        <input type="text" class="searchTerm" name="searchValue" id="searchValue" placeholder="Search for books by title, ISBN, or author" required>
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i> Search
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
